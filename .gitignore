@@ -1,1 +1,4 @@
 delete-me.txt
+bin/
+lib/
+pyenv.cfg
