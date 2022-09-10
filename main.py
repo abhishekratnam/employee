@@ -1,23 +1,21 @@
-from imp import reload
-import uvicorn
+from database.db import get_db
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from routes.api import router as api_router
-import uvicorn
+import logging
 from fastapi import FastAPI
-import os
-
+# create logger
 app = FastAPI()
+
 
 origins = ["http://localhost:8005"]
 
 
-
 app.add_middleware(
-                        CORSMiddleware,
-                        allow_origins=origins,
-                        allow_credentials=True,
-                        allow_methods=["*"],
-                        allow_headers=["*"],)
+                            CORSMiddleware,
+                            allow_origins=origins,
+                            allow_credentials=True,
+                            allow_methods=["*"],
+                            allow_headers=["*"],)
 
 app.include_router(api_router)

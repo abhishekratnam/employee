@@ -1,62 +1,46 @@
 from email.policy import default
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
-# from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, DateTime, Integer, String
 from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy import create_engine
+from sqlalchemy.sql import func
 import uuid
+SQLALCHEMY_DATABASE_URL = "postgresql://abhishek:password@localhost/management_portal"
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
+import logging
+logger = logging.getLogger('database')
 
-# # SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
-# # f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
-SQLALCHEMY_DATABASE_URL = "postgresql://abhishek:password@postgresserver/stocks_watcher"
-engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
-SessionLocal = sessionmaker(bind=engine)
-    
+Base = declarative_base()
+def get_db():
+    db= SessionLocal()
+    try:
+        yield db
+    except:
+        logger.error("Closed DB unexpectedly")
+        db.close()
+
 
 def generate_uuid():
-    return str(uuid.uuid4())
-Base = declarative_base()
-class Stock(Base):
-    __tablename__ = "stock"
-    id = Column(Integer, primary_key=True, default=generate_uuid)
-    name = Column(String)
-    type = Column(String)
-    open = Column(float)
-    high = Column(float)
-    low = Column(float)
-    close = Column(float)
-    ltp = Column(float)
-    volume = Column(float)
-    lowPriceRange = Column(float)
-    highPriceRange = Column(float)
-    day_change_percent = Column(float)
-    time_created = Column(DateTime(timezone=True), server_default=func.now())
-    time_updated = Column(DateTime(timezone=True), onupdate=func.now())
+    return str(uuid.uuid4())   
 
-    def dict(self):
-        return{
-            "id": self.id,
-            "name": self.name,
-            "type": self.type,
-            "created": self.time_created
-        }
+class Company(Base):
+    __tablename__ = "company"
+    id = Column(Integer, primary_key=True, nullable=False, index=True)
+    legal_name = Column(String)
+    incorporation_date = Column(DateTime(timezone=True), server_default=func.now())
+    display_name = Column(String)
+    us_state_inc = Column(String) # (For example: California)
 
-# class Fundamentals(Base):
-#     __tablename__ = "fundamentals"
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String)
-#     # pe_ratio = Column(float)
-#     # pb_ratio = Column(float)
-#     # market_cap = Column(float)
-#     # book_value = Column(float)
-#     # eps_ttm = Column(float)
-#     # roe = Column(float)
-#     # industry_pe = Column(float)
-#     capped_type = Column(String)
-#     # dividend_yield_percent = Column(float)
-#     # debt_to_equity = Column(float)
-#     face_value =  Column(Integer)
-#     fundamentals = relationship("stock")
-#     class Config:
-#         orm_mode = True
-
-
+class Employees(Base):
+    __tablename__ = "employees"
+    id = Column(Integer, primary_key=True, nullable=False, index=True)
+    first_name          = Column(String)
+    last_name           = Column(String)
+    company_id          = Column(Integer)
+    work_email          = Column(String)
+    manager_id          = Column(Integer)
+    dob                 = Column(String)
+    employee_number     = Column(Integer)
+    tax_id              = Column(Integer)
+    employment_status   = Column(String)#One of ACTIVE and INACTIVE
+    marital_status      = Column(String)

@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from api.stocks import stock
+from api.employee import employee
 
 router = APIRouter()
-router.include_router(stock.router)
+router.include_router(employee.router)
