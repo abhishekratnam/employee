@@ -53,8 +53,9 @@ CREATE TABLE employees (
 
 ```
 <img width="1302" alt="Screenshot 2022-09-10 at 11 12 52 AM" src="https://user-images.githubusercontent.com/24920237/189471396-7c9c29fd-e8f5-4eff-8a32-6b38cd518656.png">
-
 <img width="1302" alt="Screenshot 2022-09-10 at 11 28 33 AM" src="https://user-images.githubusercontent.com/24920237/189471312-6af147b2-8008-4c87-bbea-9b68973567b5.png">
+<img width="1302" alt="Screenshot 2022-09-10 at 11 33 42 AM" src="https://user-images.githubusercontent.com/24920237/189471440-c60a5fc9-a547-4b21-8175-bb40baf97d9d.png">
+
 
 
 
