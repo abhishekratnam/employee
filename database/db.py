@@ -7,8 +7,9 @@ import uuid
 SQLALCHEMY_DATABASE_URL = "postgresql://abhishek:password@localhost/management_portal"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
-import logging
-logger = logging.getLogger('database')
+from config import logger_init
+logger = logger_init('database')
+
 
 Base = declarative_base()
 def get_db():

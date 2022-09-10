@@ -10,9 +10,8 @@ from fastapi import Depends, FastAPI, HTTPException
 dt = datetime.now()    # for date and time
 ts = datetime.timestamp(dt)    # for timestamp
 employee = FastAPI()
-import logging
-logger = logging.getLogger('api')
-
+from config import logger_init
+logger = logger_init('api')
 
 @employee.post("/company")
 def post_Company(company:Companymodel, db: Session = Depends(get_db)):

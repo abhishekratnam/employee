@@ -5,6 +5,9 @@ from routes.api import router as api_router
 import logging
 from fastapi import FastAPI
 # create logger
+from config import logger_init
+logger = logger_init('main')
+
 app = FastAPI()
 
 
